@@ -1,4 +1,5 @@
 body {
+  margin: 0;
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -19,7 +20,6 @@ body {
   padding: 10px;
 }
 
-
 .keyboard {
   display: flex;
   flex-direction: column;
@@ -31,7 +31,10 @@ body {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   background-color: #a7a7a7;
   padding: 10px;
+  min-width: 600px;
   max-width: 100vw;
+  overflow-x: auto;
+  overflow-y: hidden;
 }
 
 .row {
@@ -116,6 +119,10 @@ kbd[data-key="ctx"] {
 
 kbd[data-key="space"] {
   width: 250px;
+}
+
+kbd[data-key="space"]::after {
+  content: '';
 }
 
 kbd:active,
@@ -210,4 +217,34 @@ kbd[data-key="\\"] {
   border-top-color: #555555;
   border-bottom-color: #222222;
   color: #ffffff;
+}
+
+.author {
+  text-align: center;
+  font-size: 24px;
+  font-weight: lighter;
+  margin-top: 40px;
+  letter-spacing: 2px;
+}
+
+.keyboard {
+  margin-bottom: 20px;
+}
+
+@media (max-width: 768px) {
+  .keyboard {
+    transform: scale(0.8);
+  }
+}
+
+@media (max-width: 480px) {
+  .keyboard {
+    transform: scale(0.6);
+  }
+}
+
+@media (max-width: 320px) {
+  .keyboard {
+    transform: scale(0.4);
+  }
 }
