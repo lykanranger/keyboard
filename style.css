@@ -144,7 +144,7 @@ kbd[data-key="enter"] {
   border-color: #3399FF;
   border-top-color: #66B2FF;
   border-bottom-color: #005999;
-  color: rgb(0, 0, 0);
+  color: rgb(255, 255, 255);
 }
 
 kbd[data-key="tab"] {
@@ -217,14 +217,6 @@ kbd[data-key="\\"] {
   border-top-color: #555555;
   border-bottom-color: #222222;
   color: #ffffff;
-}
-
-.author {
-  text-align: center;
-  font-size: 24px;
-  font-weight: lighter;
-  margin-top: 40px;
-  letter-spacing: 2px;
 }
 
 .keyboard {
