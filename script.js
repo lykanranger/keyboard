@@ -22,6 +22,33 @@ const codeToElement = {
   'Enter': $key('enter'),
 }
 
+// Add event listeners for keyboard keys
+document.querySelectorAll('kbd').forEach((key) => {
+  key.addEventListener('click', () => {
+    const keyValue = key.getAttribute('data-key');
+    if (keyValue) {
+      if (keyValue === 'backspace') {
+        typedText = typedText.slice(0, -1);
+      } else if (keyValue === 'enter') {
+        typedText += '\n';
+      } else if (keyValue === 'space') {
+        typedText += ' ';
+      } else {
+        typedText += keyValue;
+      }
+      typedTextElement.textContent = typedText;
+    }
+  });
+
+  key.addEventListener('mousedown', () => {
+    key.classList.add('pressed');
+  });
+
+  key.addEventListener('mouseup', () => {
+    key.classList.remove('pressed');
+  });
+});
+
 window.addEventListener('keydown', (e) => {
   const el = codeToElement[e.code] || $key(e.key.toLowerCase());
   if (el) { 
@@ -46,4 +73,4 @@ window.addEventListener('keyup', (e) => {
   if (el) {  
     el.classList.remove('pressed'); 
   }
-})
+});
