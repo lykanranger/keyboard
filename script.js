@@ -4,6 +4,8 @@ const $key = (key) => (
 
 const typedTextElement = document.getElementById('typed-text');
 let typedText = '';
+let shiftOn = false;
+let capsLockOn = false;
 
 const codeToElement = {
   'CapsLock': $key('caps'),
@@ -22,7 +24,6 @@ const codeToElement = {
   'Enter': $key('enter'),
 }
 
-// Add event listeners for keyboard keys
 document.querySelectorAll('kbd').forEach((key) => {
   key.addEventListener('click', () => {
     const keyValue = key.getAttribute('data-key');
@@ -33,8 +34,18 @@ document.querySelectorAll('kbd').forEach((key) => {
         typedText += '\n';
       } else if (keyValue === 'space') {
         typedText += ' ';
-      } else {
-        typedText += keyValue;
+      } else if (keyValue === 'caps') {
+        capsLockOn = !capsLockOn;
+      } else if (keyValue === 'shift') {
+        shiftOn = true;
+        setTimeout(() => shiftOn = false, 200);
+      } else if (!['tab', 'ctrl', 'win', 'alt'].includes(keyValue)) {
+        let char = keyValue;
+        if ((capsLockOn && !shiftOn) || (!capsLockOn && shiftOn)) {
+          typedText += char.toUpperCase();
+        } else {
+          typedText += char.toLowerCase();
+        }
       }
       typedTextElement.textContent = typedText;
     }
@@ -61,8 +72,16 @@ window.addEventListener('keydown', (e) => {
     typedText += '\n';
   } else if (e.key === ' ') {
     typedText += ' ';
+  } else if (e.key === 'CapsLock') {
+    capsLockOn = !capsLockOn;
+  } else if (e.key === 'Shift') {
+    shiftOn = true;
   } else if (e.key.length === 1) {
-    typedText += e.key;
+    if ((capsLockOn && !e.shiftKey) || (!capsLockOn && e.shiftKey)) {
+      typedText += e.key.toUpperCase();
+    } else {
+      typedText += e.key.toLowerCase();
+    }
   }
 
   typedTextElement.textContent = typedText;
@@ -72,5 +91,9 @@ window.addEventListener('keyup', (e) => {
   const el = codeToElement[e.code] || $key(e.key.toLowerCase());
   if (el) {  
     el.classList.remove('pressed'); 
+  }
+
+  if (e.key === 'Shift') {
+    shiftOn = false;
   }
 });
